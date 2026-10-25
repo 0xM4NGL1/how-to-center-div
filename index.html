@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Center a Div — Glowing</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Inter:wght@300;600&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #020202;
+      color: #f0f0f0;
+      font-family: 'Inter', system-ui, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 2rem;
+      overflow-x: hidden;
+    }
+
+    /* Animated glowing orbs in background */
+    .glow-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.35;
+      animation: floatOrb 12s ease-in-out infinite alternate;
+    }
+    .orb:nth-child(1) {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, #00ffc8 0%, transparent 70%);
+      top: 10%; left: 20%;
+      animation-delay: 0s;
+    }
+    .orb:nth-child(2) {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, #ff00aa 0%, transparent 70%);
+      bottom: 10%; right: 10%;
+      animation-delay: -4s;
+      animation-duration: 14s;
+    }
+    .orb:nth-child(3) {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, #ccff00 0%, transparent 70%);
+      top: 60%; left: 60%;
+      animation-delay: -7s;
+      animation-duration: 18s;
+    }
+
+    @keyframes floatOrb {
+      from { transform: translate(0, 0) scale(1); }
+      to   { transform: translate(40px, -30px) scale(1.15); }
+    }
+
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: clamp(3rem, 8vw, 6rem);
+      letter-spacing: -0.05em;
+      text-transform: uppercase;
+      color: #fff;
+      text-align: center;
+      text-shadow:
+        0 0 10px rgba(0,255,200,0.6),
+        0 0 30px rgba(0,255,200,0.4),
+        0 0 60px rgba(0,255,200,0.2);
+      animation: pulseText 3s ease-in-out infinite alternate;
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes pulseText {
+      from { text-shadow: 0 0 10px rgba(0,255,200,0.6), 0 0 30px rgba(0,255,200,0.4), 0 0 60px rgba(0,255,200,0.2); }
+      to   { text-shadow: 0 0 20px rgba(255,0,170,0.7), 0 0 40px rgba(255,0,170,0.5), 0 0 80px rgba(255,0,170,0.3); }
+    }
+
+    .subtitle {
+      color: #777;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      margin-bottom: 3rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 1.5rem;
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 520px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.05) inset,
+        0 30px 60px rgba(0,0,0,0.7),
+        0 0 60px rgba(0,255,200,0.08);
+      position: relative;
+      z-index: 1;
+      transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .card:hover {
+      border-color: rgba(0,255,200,0.4);
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.08) inset,
+        0 30px 60px rgba(0,0,0,0.7),
+        0 0 80px rgba(0,255,200,0.15),
+        0 0 120px rgba(255,0,170,0.08);
+    }
+
+    .label {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(0,255,200,0.9);
+      margin-bottom: 2.5rem;
+      display: block;
+      text-shadow: 0 0 10px rgba(0,255,200,0.5);
+    }
+
+    .demo {
+      height: 260px;
+      border: 1px dashed rgba(255,255,255,0.12);
+      border-radius: 1rem;
+      background: radial-gradient(circle at center, rgba(255,255,255,0.03), rgba(255,255,255,0) 70%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Animated glow ring behind box */
+    .demo::before {
+      content: '';
+      position: absolute;
+      width: 160px; height: 160px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,255,200,0.4), transparent 70%);
+      animation: pulseRing 2.5s ease-in-out infinite;
+      z-index: 0;
+      filter: blur(20px);
+    }
+
+    @keyframes pulseRing {
+      0%, 100% { transform: scale(0.8); opacity: 0.7; }
+      50% { transform: scale(1.2); opacity: 1; }
+    }
+
+    .box {
+      width: 110px;
+      height: 110px;
+      background: linear-gradient(135deg, #00ffc8, #ff00aa);
+      border-radius: 0.75rem;
+      box-shadow:
+        0 0 20px rgba(0,255,200,0.6),
+        0 0 40px rgba(255,0,170,0.4),
+        0 0 80px rgba(0,255,200,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      color: #fff;
+      text-shadow: 0 0 8px #fff, 0 0 20px rgba(255,255,255,0.5);
+      position: relative;
+      z-index: 1;
+      animation: floatBox 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes floatBox {
+      from { transform: translateY(0); }
+      to   { transform: translateY(-12px); }
+    }
+
+    /* Glowing border around box */
+    .box::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 1rem;
+      border: 1.5px solid rgba(255,255,255,0.15);
+      box-shadow: inset 0 0 20px rgba(255,255,255,0.05);
+      animation: borderGlow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes borderGlow {
+      from { border-color: rgba(255,255,255,0.15); box-shadow: inset 0 0 20px rgba(255,255,255,0.05); }
+      to   { border-color: rgba(0,255,200,0.8); box-shadow: inset 0 0 30px rgba(0,255,200,0.15), 0 0 20px rgba(0,255,200,0.3); }
+    }
+
+    .snippet {
+      margin-top: 2rem;
+      padding: 1.25rem 1.5rem;
+      background: #080808;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 0.75rem;
+      font-family: ui-monospace, SFMono-Regular, monospace;
+      font-size: 0.85rem;
+      color: #ccc;
+      line-height: 1.7;
+      box-shadow: 0 0 30px rgba(0,255,200,0.05);
+    }
+    .snippet .k { color: #ff66aa; }
+    .snippet .v { color: #66ffaa; }
+    .snippet .p { color: #66ccff; }
+
+    footer {
+      margin-top: 3rem;
+      color: #333;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      position: relative;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="glow-bg" aria-hidden="true">
+    <div class="orb"></div>
+    <div class="orb"></div>
+    <div class="orb"></div>
+  </div>
+
+  <h1>Center DIV</h1>
+  <p class="subtitle">CENTER · YOUR · DIV(HOWTO)</p>
+
+  <article class="card" aria-label="Centering demo">
+    <span class="label">Flexbox</span>
+    <div class="demo">
+      <div class="box">DIV</div>
+    </div>
+    <pre class="snippet"><span class="p">display</span>: <span class="v">flex</span>;
+<span class="p">justify-content</span>: <span class="v">center</span>;
+<span class="p">align-items</span>: <span class="v">center</span>;</pre>
+  </article>
+
+  <footer>0XM4NGLI</footer>
+</body>
+</html>
